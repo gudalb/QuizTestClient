@@ -9,6 +9,7 @@ import java.net.Socket;
 public class QuizClient extends Thread {
     Socket socket;
     int port = 54321;
+    int howManyQuestions = 4;
     BufferedReader input;
     PrintWriter output;
 
@@ -18,11 +19,12 @@ public class QuizClient extends Thread {
         output = new PrintWriter(socket.getOutputStream(), true);
     }
 
-    public void play () {
+    public void play () throws IOException {
         String response;
         BufferedReader sysIn = new BufferedReader(new InputStreamReader(System.in));
 
-        while (true) {
+        //while (true)
+        for (int i = 0; i < howManyQuestions; i++) {
             try {
                 while (true) {
                     response = input.readLine();
@@ -48,7 +50,15 @@ public class QuizClient extends Thread {
                 e.printStackTrace();
             }
         }
-
+            // receive result
+        while (true) {
+            response = input.readLine();
+            if (response != null) {
+                System.out.println(response);
+                if (response.startsWith("p1:"))
+                    break;
+            }
+        }
 
         }
 
@@ -62,7 +72,11 @@ public class QuizClient extends Thread {
             }
         }
         public void run () {
-            play();
+            try {
+                play();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
