@@ -23,7 +23,7 @@ public class QuizClient extends Thread {
         String response;
         BufferedReader sysIn = new BufferedReader(new InputStreamReader(System.in));
 
-        //while (true)
+
         for (int i = 0; i < howManyQuestions; i++) {
             try {
                 while (true) {
@@ -50,7 +50,7 @@ public class QuizClient extends Thread {
                 e.printStackTrace();
             }
         }
-            // receive result
+            // receive game result
         while (true) {
             response = input.readLine();
             if (response != null) {
@@ -62,12 +62,12 @@ public class QuizClient extends Thread {
 
         }
 
-        public void receive (String response) throws IOException {
+        public void receive (String response, String breakAtStartsWith) throws IOException {
             while (true) {
                 response = input.readLine();
                 if (response != null)
                     System.out.println(response);
-                if (response.startsWith("3"))
+                if (response.startsWith(breakAtStartsWith))
                     break;
             }
         }
